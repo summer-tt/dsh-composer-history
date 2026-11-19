@@ -1,4 +1,13 @@
 node_modules/
-lib/
+# Git installations use the same runtime files and declarations as npm packs.
+/lib/*
+!/lib/index.js
+!/lib/invariant.js
+!/lib/client.js
+!/lib/types/
+/lib/types/**/*
+!/lib/types/**/
+!/lib/types/**/*.d.ts
+.worktrees/
 coverage/
 *.tgz
