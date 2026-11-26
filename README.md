@@ -261,7 +261,7 @@ harness 核心给每个 dsh 会话提供滑动上下文窗口——与 Claude Co
 
 - **召回跨压缩留存**——被遮蔽的轮次仍留在 Chat 视图发布的已结算会话里，↑ 依旧能走过检查点前后你发送过的每一条消息。
 - **摘要加入历史**——每个检查点的摘要文本以 `[compacted] …` 条目进入 ↑ 召回和 `Ctrl+R` 搜索（开关：`includeCompactionSummaries`），模型不再逐字看到的上下文仍然一键可达。
-- **压缩通知**——页面打开期间有检查点落地时，底部弹出短暂通知（Claude Code 的「自动压缩会话…」时刻），附摘要片段和一键**填入 `/compact`** 按钮（`showCompactionNotice`、`compactCommandText`）；填入只进普通草稿，只有你按 Enter 才发送。
+- **压缩通知**——设为 `showCompactionNotice: true` 后，页面打开期间有检查点落地时，底部弹出短暂通知（Claude Code 的「自动压缩会话…」时刻），附摘要片段和一键**填入 `/compact`** 按钮（`showCompactionNotice`、`compactCommandText`）；填入只进普通草稿，只有你按 Enter 才发送。
 - **搜索计数**——`Ctrl+R` 面板新增实时的 `N entries` / `N matches` 状态行，长条目限两行显示。
 
 > 压缩本身（阈值、摘要模型、`/compact`）由 harness 核心的 compaction 插件负责——本插件只观察 Chat 视图的会话投影（`uiConversation.binding(id).target('chat').legacy.nodes`）已经发布的检查点标记，因此不需要任何 agent-loop 或模型请求改动。
@@ -304,7 +304,7 @@ harness 核心给每个 dsh 会话提供滑动上下文窗口——与 Claude Co
 | `searchKeys` | `['Ctrl+R']` | 打开搜索的组合键规格（修饰键 `Ctrl`/`Alt`/`Meta`/`Shift` + 键名）；非法规格会使浏览器 fiber 响亮失败 |
 | `searchCaseSensitive` | `false` | 搜索匹配是否区分字母大小写 |
 | `includeCompactionSummaries` | `true` | 把 `[compacted] …` 检查点摘要纳入召回与搜索 |
-| `showCompactionNotice` | `true` | 压缩检查点落地时显示短暂通知 |
+| `showCompactionNotice` | `false` | 压缩检查点落地时显示短暂通知 |
 | `compactCommandText` | `'/compact'` | 通知中「Compact now」按钮填入作曲器的斜杠命令；`''` 隐藏该按钮 |
 | `enableSnippets` | `true` | 启用片段库（`/save`、`/load`、搜索面板选取） |
 | `maxSnippets` | `200` | 最大存储片段数；`0` = 不限 |

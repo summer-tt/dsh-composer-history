@@ -228,23 +228,24 @@ describe('Chat-target history wiring (CP-7)', () => {
     h.dispose()
   })
 
-  it('observes checkpoints published through the Chat subscription', () => {
+  it.each([undefined, false, true])('only shows a live compaction notice when configured (%s)', (showCompactionNotice) => {
     const list = sessionsList({ current: 's1', ids: ['s1'], byId: { s1: { title: 't', blank: false } } })
     const chat = chatTarget([hello])
     const h = harness(list, { s1: chat })
-    apply(h.ctx as unknown as Parameters<typeof apply>[0])
-    expect(document.body.textContent).not.toContain('earlier turns summarized')
-
-    chat.publish('append', [checkpoint])
-    expect(document.body.textContent).toContain('earlier turns summarized')
-    h.dispose()
+    const config = showCompactionNotice === undefined ? {} : { showCompactionNotice }
+    try {
+      apply(h.ctx as unknown as Parameters<typeof apply>[0], config)
+      expect(document.body.textContent).not.toContain('earlier turns summarized')
+      chat.publish('append', [checkpoint])
+      expect(document.body.textContent?.includes('earlier turns summarized')).toBe(showCompactionNotice === true)
+    } finally { h.dispose() }
   })
 
   it('keeps a checkpoint from synchronous Chat activation silent', () => {
     const list = sessionsList({ current: 's1', ids: ['s1'] })
     const h = harness(list, { s1: chatTarget([hello, checkpoint]) })
     try {
-      apply(h.ctx as unknown as Parameters<typeof apply>[0])
+      apply(h.ctx as unknown as Parameters<typeof apply>[0], { showCompactionNotice: true })
       expect(document.body.textContent).not.toContain('earlier turns summarized')
     } finally { h.dispose() }
   })
@@ -255,7 +256,7 @@ describe('Chat-target history wiring (CP-7)', () => {
     const chat = chatTarget(kind === 'replace' ? [] : [recent])
     const h = harness(list, { s1: chat })
     try {
-      apply(h.ctx as unknown as Parameters<typeof apply>[0])
+      apply(h.ctx as unknown as Parameters<typeof apply>[0], { showCompactionNotice: true })
       chat.publish(kind, [hello, checkpoint])
       expect(document.body.textContent).not.toContain('earlier turns summarized')
       expect(loadEntries(localStorage, STORE_KEY)).toContain('hello')
@@ -278,7 +279,7 @@ describe('Chat-target history wiring (CP-7)', () => {
     const s2 = chatTarget([hello])
     const h = harness(list, { s1, s2 })
     try {
-      apply(h.ctx as unknown as Parameters<typeof apply>[0])
+      apply(h.ctx as unknown as Parameters<typeof apply>[0], { showCompactionNotice: true })
       list.set(session('s2'))
       s1.publish('append', [checkpoint])
       list.set(session('s1'))

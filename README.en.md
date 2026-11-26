@@ -261,7 +261,7 @@ The harness core gives every dsh session a sliding context window, the same work
 
 - **Recall survives compaction** — shadowed turns stay in the finalized conversation the Chat view publishes, so ↑ still walks every message you sent before and after a checkpoint.
 - **Summaries join the history** — each checkpoint's summary text enters ↑ recall and `Ctrl+R` search as a `[compacted] …` entry (toggle: `includeCompactionSummaries`), so context the model no longer sees verbatim stays one keystroke away.
-- **Compaction notice** — when a checkpoint lands while the page is open, a transient snackbar announces it (the Claude Code "Auto-compacting conversation…" moment) with the summary snippet and a one-click **Fill `/compact`** action (`showCompactionNotice`, `compactCommandText`); the fill lands in the ordinary draft, and only your Enter sends it.
+- **Compaction notice** — Set `showCompactionNotice: true` to enable it. Then when a checkpoint lands while the page is open, a transient snackbar announces it (the Claude Code "Auto-compacting conversation…" moment) with the summary snippet and a one-click **Fill `/compact`** action (`showCompactionNotice`, `compactCommandText`); the fill lands in the ordinary draft, and only your Enter sends it.
 - **Search counts** — the `Ctrl+R` panel now shows a live `N entries` / `N matches` status line, and long entries are clamped to two lines.
 
 > Compaction itself (thresholds, summary model, `/compact`) is owned by the harness core's compaction plugins — this plugin only observes the checkpoint markers the Chat view's conversation projection already publishes (`uiConversation.binding(id).target('chat').legacy.nodes`), so it works without any agent-loop or model-request changes.
@@ -304,7 +304,7 @@ Most-used keys:
 | `searchKeys` | `['Ctrl+R']` | Chord specs opening the search (modifiers `Ctrl`/`Alt`/`Meta`/`Shift` + a key name); a malformed spec fails the browser fiber loudly |
 | `searchCaseSensitive` | `false` | Whether search matching distinguishes letter case |
 | `includeCompactionSummaries` | `true` | Admit `[compacted] …` checkpoint summaries into recall and search |
-| `showCompactionNotice` | `true` | Show a transient notice when a compaction checkpoint lands |
+| `showCompactionNotice` | `false` | Show a transient notice when a compaction checkpoint lands |
 | `compactCommandText` | `'/compact'` | Slash command the notice's "Compact now" action fills into the composer; `''` hides the action |
 | `enableSnippets` | `true` | Enable the snippet library (`/save`, `/load`, search-panel picking) |
 | `maxSnippets` | `200` | Maximum stored snippets; `0` = unlimited |

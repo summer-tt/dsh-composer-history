@@ -259,7 +259,7 @@ O `dsh-composer-history` liga o compositor a esse fluxo para que o deslize da ja
 
 - **O recall sobrevive à compactação** — turnos sombreados continuam na conversa finalizada que a visão Chat publica, então ↑ ainda percorre cada mensagem que você enviou antes e depois de um checkpoint.
 - **Resumos entram no histórico** — o texto do resumo de cada checkpoint entra no recall ↑ e na busca `Ctrl+R` como entrada `[compacted] …` (interruptor: `includeCompactionSummaries`), então o contexto que o modelo não vê mais literalmente fica a uma tecla.
-- **Aviso de compactação** — quando um checkpoint chega com a página aberta, um snackbar transitório o anuncia (o momento "Auto-compacting conversation…" do Claude Code) com o trecho do resumo e uma ação de um clique **Fill `/compact`** (`showCompactionNotice`, `compactCommandText`); o preenchimento cai no rascunho comum, e só o seu Enter envia.
+- **Aviso de compactação** — Se ativar `showCompactionNotice: true`, quando um checkpoint chega com a página aberta, um snackbar transitório o anuncia (o momento "Auto-compacting conversation…" do Claude Code) com o trecho do resumo e uma ação de um clique **Fill `/compact`** (`showCompactionNotice`, `compactCommandText`); o preenchimento cai no rascunho comum, e só o seu Enter envia.
 - **Contagens de busca** — o painel `Ctrl+R` agora mostra uma linha de status ao vivo `N entries` / `N matches`, e entradas longas ficam limitadas a duas linhas.
 
 > A compactação em si (limiares, modelo de resumo, `/compact`) pertence aos plugins de compactação do núcleo do harness — este plugin apenas observa os marcadores de checkpoint que a projeção de conversa da visão Chat já publica (`uiConversation.binding(id).target('chat').legacy.nodes`), então funciona sem mudanças no agent-loop ou nas requisições ao modelo.
@@ -302,7 +302,7 @@ Chaves mais usadas:
 | `searchKeys` | `['Ctrl+R']` | Especificações de chord que abrem a busca (modificadores `Ctrl`/`Alt`/`Meta`/`Shift` + uma tecla); uma especificação malformada derruba a fibra do navegador |
 | `searchCaseSensitive` | `false` | Se a busca diferencia maiúsculas de minúsculas |
 | `includeCompactionSummaries` | `true` | Admite os resumos de checkpoint `[compacted] …` no recall e na busca |
-| `showCompactionNotice` | `true` | Mostra um aviso transitório quando um checkpoint de compactação chega |
+| `showCompactionNotice` | `false` | Mostra um aviso transitório quando um checkpoint de compactação chega |
 | `compactCommandText` | `'/compact'` | Comando de barra que a ação "Compact now" do aviso preenche no compositor; `''` oculta a ação |
 | `enableSnippets` | `true` | Ativa a biblioteca de snippets (`/save`, `/load`, seleção no painel de busca) |
 | `maxSnippets` | `200` | Máximo de snippets guardados; `0` = ilimitado |

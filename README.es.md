@@ -259,7 +259,7 @@ El núcleo del harness da a cada sesión dsh una ventana de contexto deslizante,
 
 - **La recuperación sobrevive a la compactación** — los turnos ensombrecidos siguen en la conversación finalizada que publica la vista Chat, así que ↑ sigue recorriendo cada mensaje que enviaste antes y después de un punto de control.
 - **Los resúmenes se unen al historial** — el texto del resumen de cada punto de control entra en la recuperación ↑ y en la búsqueda `Ctrl+R` como entrada `[compacted] …` (interruptor: `includeCompactionSummaries`), así el contexto que el modelo ya no ve literalmente queda a una tecla.
-- **Aviso de compactación** — cuando llega un punto de control con la página abierta, un snackbar transitorio lo anuncia (el momento «Auto-compacting conversation…» de Claude Code) con el fragmento del resumen y una acción de un clic **Fill `/compact`** (`showCompactionNotice`, `compactCommandText`); el relleno cae en el borrador ordinario y solo tu Enter lo envía.
+- **Aviso de compactación** — Si activas `showCompactionNotice: true`, cuando llega un punto de control con la página abierta, un snackbar transitorio lo anuncia (el momento «Auto-compacting conversation…» de Claude Code) con el fragmento del resumen y una acción de un clic **Fill `/compact`** (`showCompactionNotice`, `compactCommandText`); el relleno cae en el borrador ordinario y solo tu Enter lo envía.
 - **Recuentos de búsqueda** — el panel `Ctrl+R` muestra ahora una línea de estado en vivo `N entries` / `N matches`, y las entradas largas se limitan a dos líneas.
 
 > La compactación en sí (umbrales, modelo de resumen, `/compact`) pertenece a los plugins de compactación del núcleo del harness — este plugin solo observa los marcadores de punto de control que ya publica la proyección de conversación de la vista Chat (`uiConversation.binding(id).target('chat').legacy.nodes`), así que funciona sin cambios en el agent-loop ni en las peticiones al modelo.
@@ -302,7 +302,7 @@ Claves más usadas:
 | `searchKeys` | `['Ctrl+R']` | Especificaciones de chord que abren la búsqueda (modificadores `Ctrl`/`Alt`/`Meta`/`Shift` + una tecla); una especificación mal formada hace fallar la fibra del navegador |
 | `searchCaseSensitive` | `false` | Si la búsqueda distingue mayúsculas de minúsculas |
 | `includeCompactionSummaries` | `true` | Admite los resúmenes de punto de control `[compacted] …` en recuperación y búsqueda |
-| `showCompactionNotice` | `true` | Muestra un aviso transitorio cuando llega un punto de control de compactación |
+| `showCompactionNotice` | `false` | Muestra un aviso transitorio cuando llega un punto de control de compactación |
 | `compactCommandText` | `'/compact'` | Comando de barra que la acción "Compact now" del aviso rellena en el compositor; `''` oculta la acción |
 | `enableSnippets` | `true` | Activa la biblioteca de fragmentos (`/save`, `/load`, selección en el panel de búsqueda) |
 | `maxSnippets` | `200` | Máximo de fragmentos guardados; `0` = ilimitado |

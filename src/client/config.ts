@@ -98,7 +98,7 @@ const FIELDS = {
   searchKeys: z.array(z.string()).default(['Ctrl+R']),
   searchCaseSensitive: z.boolean().default(false),
   includeCompactionSummaries: z.boolean().default(true),
-  showCompactionNotice: z.boolean().default(true),
+  showCompactionNotice: z.boolean().default(false),
   compactCommandText: z.string().default('/compact'),
   enableSnippets: z.boolean().default(true),
   maxSnippets: z.number().step(1).min(0).default(200),

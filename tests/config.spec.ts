@@ -32,7 +32,7 @@ describe('Config schema', () => {
       searchKeys: ['Ctrl+R'],
       searchCaseSensitive: false,
       includeCompactionSummaries: true,
-      showCompactionNotice: true,
+      showCompactionNotice: false,
       compactCommandText: '/compact',
       enableSnippets: true,
       maxSnippets: 200,
